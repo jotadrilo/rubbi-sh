@@ -4,4 +4,4 @@ bazel-rubbi-sh
 bazel-out
 bazel-testlogs
 .vscode
-.dist
+dist

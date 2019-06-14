@@ -1,7 +1,10 @@
 # http://goreleaser.com
+project_name: rubbi-sh
 before:
   hooks:
     - go mod download
+    - ./tools/bump-version.sh
+    - ./tools/tag-version.sh
 builds:
 - env:
   - CGO_ENABLED=0

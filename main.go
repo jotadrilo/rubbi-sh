@@ -32,9 +32,11 @@ func init() {
 }
 
 func usage() {
-	fmt.Printf("Version: %s\n", version)
-	fmt.Printf("Commit: %s\n", commit)
-	fmt.Printf("Release Date: %s\n", date)
+	fmt.Print("Release information:\n")
+	fmt.Printf("  - Version:\t%s\n", version)
+	fmt.Printf("  - Commit: \t%s\n", commit)
+	fmt.Printf("  - Date:   \t%s\n", date)
+	fmt.Print("\nOptions:\n")
 	flag.PrintDefaults()
 	os.Exit(1)
 }

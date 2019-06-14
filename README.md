@@ -4,6 +4,24 @@ This is a Go and Shell tool that provides a sandbox directory for rubbish.
 
 If you usually run tons of commands, generating garbage everywhere, you need a place to work without generating dirty left overs.
 
+## TL;DR
+
+### Linux
+
+```
+mkdir -p rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.3/rubbi-sh_0.0.3_linux_386.tar.gz | tar xzf - -C rubbi-sh && \
+sudo bash -c 'cd rubbi-sh; ./install.sh'
+```
+
+### MacOS
+
+```
+mkdir -p rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.3/rubbi-sh_0.0.3_darwin_amd64.tar.gz | tar xzf - -C rubbi-sh && \
+sudo bash -c 'cd rubbi-sh; ./install.sh'
+```
+
 ## Getting Started
 
   * [Install rubbi-sh](install.sh)

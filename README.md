@@ -7,6 +7,9 @@ If you usually run tons of commands, generating garbage everywhere, you need a p
 ## Getting Started
 
   * [Install rubbi-sh](install.sh)
+    * - Download the [latest release](https://github.com/jotadrilo/rubbi-sh/releases)
+    * - Uncompress the archive
+    * - Run `install.sh`
   * [Get started with rubbi-sh](#examples)
 
 ## Examples

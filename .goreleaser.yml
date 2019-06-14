@@ -3,8 +3,9 @@ project_name: rubbi-sh
 before:
   hooks:
     - go mod download
-    - ./tools/bump-version.sh
-    - ./tools/tag-version.sh
+    # So far, we better do this manually
+    # - ./tools/bump-version.sh
+    # - ./tools/tag-version.sh
 builds:
 - env:
   - CGO_ENABLED=0

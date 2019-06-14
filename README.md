@@ -24,10 +24,10 @@ sudo bash -c 'cd rubbi-sh; ./install.sh'
 
 ## Getting Started
 
-  * [Install rubbi-sh](install.sh)
-    * - Download the [latest release](https://github.com/jotadrilo/rubbi-sh/releases)
-    * - Uncompress the archive
-    * - Run `install.sh`
+  * Install rubbi-sh
+    * Download the [latest release](https://github.com/jotadrilo/rubbi-sh/releases)
+    * Uncompress the archive
+    * Run `install.sh` as root user
   * [Get started with rubbi-sh](#examples)
 
 ## Examples

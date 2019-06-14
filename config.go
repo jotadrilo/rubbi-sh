@@ -19,17 +19,20 @@ const (
 	configFileName   = "config.json"
 )
 
+// Folder represents a folder object
 type Folder struct {
 	Name string `json:"name,omitempty"`
 	Path string `json:"path,omitempty"`
 }
 
+// Config represents a configuration file object
 type Config struct {
 	Folders []Folder `json:"folders"`
 	Latest  Folder   `json:"latest"`
 	Root    string   `json:"root"`
 }
 
+// Initialize creates the required folder structure and an initial configuration file
 func Initialize(root string) error {
 	// Pre-configure folders
 	if home, err := os.UserHomeDir(); err != nil {
@@ -44,7 +47,7 @@ func Initialize(root string) error {
 
 	if _, err := os.Stat(configFile); err == nil {
 		// Reload configuration
-		config, err := load()
+		config, err := Load()
 		if err != nil {
 			return err
 		}
@@ -60,6 +63,7 @@ func Initialize(root string) error {
 	return nil
 }
 
+// Init initializes the configuration file
 func Init(root string) error {
 	rubbishFolder = filepath.Join(root, "rubbish")
 	if err := initConifg(); err != nil {
@@ -77,17 +81,14 @@ func initConifg() error {
 	if _, err := os.Create(configFile); err != nil {
 		return fmt.Errorf("failed to create configuration file: %+v", err)
 	}
-	if err := save(config); err != nil {
+	if err := config.Save(); err != nil {
 		return err
 	}
 	return nil
 }
 
-func Clean() error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
+// Clean will remove the root rubbish folder and will recreate the configuration
+func (config *Config) Clean() error {
 	if err := os.RemoveAll(config.Root); err != nil {
 		return fmt.Errorf("failed to remove the folder: %+v", err)
 	}
@@ -97,7 +98,8 @@ func Clean() error {
 	return nil
 }
 
-func load() (*Config, error) {
+// Load returns the configuration parsed from the configuration file
+func Load() (*Config, error) {
 	b, err := ioutil.ReadFile(configFile)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read file: %+v", err)
@@ -111,7 +113,8 @@ func load() (*Config, error) {
 	return config, nil
 }
 
-func save(config *Config) error {
+// Save dumps the current status of the configuration to disk
+func (config *Config) Save() error {
 	data, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return fmt.Errorf("failed to encode data: %+v", err)
@@ -129,12 +132,7 @@ func createFolder(folder Folder) error {
 	return nil
 }
 
-func doesFolderExist(folder Folder) bool {
-	config, err := load()
-	if err != nil {
-		return false
-	}
-
+func (config *Config) doesFolderExist(folder Folder) bool {
 	for _, fol := range config.Folders {
 		if fol.Name == folder.Name {
 			return true
@@ -143,6 +141,7 @@ func doesFolderExist(folder Folder) bool {
 	return false
 }
 
+// GetFolder returns a cannonical folder for the given name
 func GetFolder(name string) Folder {
 	return Folder{
 		Name: name,
@@ -150,14 +149,10 @@ func GetFolder(name string) Folder {
 	}
 }
 
-func AddFolder(name string) error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
-
+// AddFolder adds a folder to the configuration and becomes it the latest folder
+func (config *Config) AddFolder(name string) error {
 	folder := GetFolder(name)
-	if doesFolderExist(folder) {
+	if config.doesFolderExist(folder) {
 		return nil
 	}
 
@@ -168,72 +163,42 @@ func AddFolder(name string) error {
 	folders := append(config.Folders, folder)
 	config.Folders = folders
 
-	if err := save(config); err != nil {
-		return err
-	}
-
-	if err := updateLatest(folder); err != nil {
+	if err := config.updateLatest(folder); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func GetLatest() (*Folder, error) {
-	config, err := load()
-	if err != nil {
-		return nil, err
-	}
-
-	return &config.Latest, nil
-}
-
-func Show() error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
-
+// Show prints all the folder entries
+func (config *Config) Show() error {
 	for n, folder := range config.Folders {
 		fmt.Printf("[%d] %s\t%s\n", n, folder.Name, folder.Path)
 	}
 	return nil
 }
 
-func Use(fn int) error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
+// Use changes the latest folder to the provided folder number
+func (config *Config) Use(fn int) error {
 	if fn > len(config.Folders)-1 {
 		return fmt.Errorf("the provided folder number does not match any existing folder")
 	}
 	config.Latest = config.Folders[fn]
-	if err := save(config); err != nil {
-		return err
-	}
 	return nil
 }
 
-func RemoveFolder(fn int) error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
-
+// RemoveFolder removes a folder from the configuration and the filesystem
+// If the folder is marked as latest, the last folder entry becomes latest.
+func (config *Config) RemoveFolder(fn int) error {
 	targetFolder := config.Folders[fn]
 	if err := os.RemoveAll(targetFolder.Path); err != nil {
 		return fmt.Errorf("failed to remove the folder: %+v", err)
 	}
 	config.Folders = remove(config.Folders, fn)
 
-	if err := save(config); err != nil {
-		return err
-	}
-
 	// If we are removing the latest folder, point to the last folder in the list
 	if config.Latest.Path == targetFolder.Path {
-		updateLatest(config.Folders[len(config.Folders)-1])
+		config.updateLatest(config.Folders[len(config.Folders)-1])
 	}
 	return nil
 }
@@ -244,17 +209,8 @@ func remove(s []Folder, i int) []Folder {
 	return s[:len(s)-1]
 }
 
-func updateLatest(folder Folder) error {
-	config, err := load()
-	if err != nil {
-		return err
-	}
-
+func (config *Config) updateLatest(folder Folder) error {
 	config.Latest = folder
-	if err := save(config); err != nil {
-		return err
-	}
-
 	latestFolder := GetFolder("latest")
 
 	// Remove existing symlink

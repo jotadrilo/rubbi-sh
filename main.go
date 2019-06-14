@@ -14,7 +14,6 @@ var (
 	date    = "unknown"
 
 	clean = flag.Bool("clean", false, "if true, the rubbish folder is removed")
-	reset = flag.Bool("reset", false, "if true, the configuration file is created again")
 	show  = flag.Bool("show", false, "if true, outputs the current rubbish folders")
 	ver   = flag.Bool("ver", false, "if true, the rubbish version will be shown")
 	add   = flag.String("add", "", "folder name to add")
@@ -52,12 +51,17 @@ func main() {
 
 func run() error {
 	if *ver {
-		fmt.Printf("%s\n", ver)
+		fmt.Printf("%s\n", version)
 		return nil
 	}
 
+	config, err := Load()
+	if err != nil {
+		return err
+	}
+
 	if *show {
-		if err := Show(); err != nil {
+		if err := config.Show(); err != nil {
 			return err
 		}
 		return nil
@@ -68,28 +72,26 @@ func run() error {
 		if err != nil {
 			return fmt.Errorf("failed to parse folder number to use: %+v", err)
 		}
-		if err := Use(fn); err != nil {
+		if err := config.Use(fn); err != nil {
 			return err
 		}
+		config.Save()
 		return nil
 	}
 
-	if *reset {
-		Init(*root)
-	}
-
 	if *clean {
-		Clean()
+		config.Clean()
+		Init(*root)
 		return nil
 	}
 
 	if *add != "" {
-		if err := AddFolder(*add); err != nil {
+		if err := config.AddFolder(*add); err != nil {
 			return err
 		}
 	} else {
 		timestamp := time.Now().Format("20060102")
-		if err := AddFolder(timestamp); err != nil {
+		if err := config.AddFolder(timestamp); err != nil {
 			return err
 		}
 	}
@@ -99,25 +101,23 @@ func run() error {
 		if err != nil {
 			return fmt.Errorf("failed to parse folder number to delete: %+v", err)
 		}
-		if err := RemoveFolder(fn); err != nil {
+		if err := config.RemoveFolder(fn); err != nil {
 			return err
 		}
+		config.Save()
 		return nil
 	}
 
-	latest, err := GetLatest()
-	if err != nil {
-		return err
-	}
-
 	// Try to change to the target directory
-	if err := os.Chdir(latest.Path); err != nil {
+	if err := os.Chdir(config.Latest.Path); err != nil {
 		return fmt.Errorf("failed to change to directory: %+v", err)
-
 	}
 	// Print path as we cannot change the shell working directory
 	// from an external binary
-	fmt.Printf(latest.Path)
+	fmt.Printf(config.Latest.Path)
+
+	// Dump all the changes in the done configuration
+	config.Save()
 
 	return nil
 }

@@ -26,7 +26,11 @@ go_binary(
     goos = "darwin",
     pure = "on",
     visibility = ["//visibility:public"],
-    x_defs = {"main.ver": "{STABLE_VERSION}"},
+    x_defs = {
+        "main.version": "{STABLE_VERSION}",
+        "main.commit": "{STABLE_COMMIT}",
+        "main.date": "{STABLE_DATE}",
+    },
 )
 
 go_binary(
@@ -36,5 +40,9 @@ go_binary(
     goos = "linux",
     pure = "on",
     visibility = ["//visibility:public"],
-    x_defs = {"main.ver": "{STABLE_VERSION}"},
+    x_defs = {
+        "main.version": "{STABLE_VERSION}",
+        "main.commit": "{STABLE_COMMIT}",
+        "main.date": "{STABLE_DATE}",
+    },
 )

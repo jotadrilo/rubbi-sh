@@ -1,6 +1,6 @@
 bazel-bin
 bazel-genfiles
-bazel-rubbish
+bazel-rubbi-sh
 bazel-out
 bazel-testlogs
 .vscode

@@ -9,16 +9,18 @@ import (
 )
 
 var (
-	ver = ""
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
 
-	clean   = flag.Bool("clean", false, "if true, the rubbish folder is removed")
-	reset   = flag.Bool("reset", false, "if true, the configuration file is created again")
-	show    = flag.Bool("show", false, "if true, outputs the current rubbish folders")
-	version = flag.Bool("version", false, "if true, the rubbish version will be shown")
-	add     = flag.String("add", "", "folder name to add")
-	del     = flag.String("del", "", "folder number to delete")
-	root    = flag.String("root", "/tmp", "temporary location for the rubbish folder")
-	use     = flag.String("use", "", "folder number to use")
+	clean = flag.Bool("clean", false, "if true, the rubbish folder is removed")
+	reset = flag.Bool("reset", false, "if true, the configuration file is created again")
+	show  = flag.Bool("show", false, "if true, outputs the current rubbish folders")
+	ver   = flag.Bool("ver", false, "if true, the rubbish version will be shown")
+	add   = flag.String("add", "", "folder name to add")
+	del   = flag.String("del", "", "folder number to delete")
+	root  = flag.String("root", "/tmp", "temporary location for the rubbish folder")
+	use   = flag.String("use", "", "folder number to use")
 )
 
 func init() {
@@ -30,7 +32,9 @@ func init() {
 }
 
 func usage() {
-	fmt.Printf("Version: %s\n", ver)
+	fmt.Printf("Version: %s\n", version)
+	fmt.Printf("Commit: %s\n", commit)
+	fmt.Printf("Release Date: %s\n", date)
 	flag.PrintDefaults()
 	os.Exit(1)
 }
@@ -45,7 +49,7 @@ func main() {
 }
 
 func run() error {
-	if *version {
+	if *ver {
 		fmt.Printf("%s\n", ver)
 		return nil
 	}

@@ -167,9 +167,12 @@ func AddFolder(name string) error {
 
 	folders := append(config.Folders, folder)
 	config.Folders = folders
-	config.Latest = folder
 
 	if err := save(config); err != nil {
+		return err
+	}
+
+	if err := updateLatest(folder); err != nil {
 		return err
 	}
 
@@ -217,12 +220,20 @@ func RemoveFolder(fn int) error {
 	if err != nil {
 		return err
 	}
-	if err := os.RemoveAll(config.Folders[fn].Path); err != nil {
+
+	targetFolder := config.Folders[fn]
+	if err := os.RemoveAll(targetFolder.Path); err != nil {
 		return fmt.Errorf("failed to remove the folder: %+v", err)
 	}
 	config.Folders = remove(config.Folders, fn)
+
 	if err := save(config); err != nil {
 		return err
+	}
+
+	// If we are removing the latest folder, point to the last folder in the list
+	if config.Latest.Path == targetFolder.Path {
+		updateLatest(config.Folders[len(config.Folders)-1])
 	}
 	return nil
 }
@@ -231,4 +242,31 @@ func RemoveFolder(fn int) error {
 func remove(s []Folder, i int) []Folder {
 	s[len(s)-1], s[i] = s[i], s[len(s)-1]
 	return s[:len(s)-1]
+}
+
+func updateLatest(folder Folder) error {
+	config, err := load()
+	if err != nil {
+		return err
+	}
+
+	config.Latest = folder
+	if err := save(config); err != nil {
+		return err
+	}
+
+	latestFolder := GetFolder("latest")
+
+	// Remove existing symlink
+	if _, err := os.Lstat(latestFolder.Path); err == nil {
+		if err := os.Remove(latestFolder.Path); err != nil {
+			return fmt.Errorf("failed to remove the current latest symlink: %+v", err)
+		}
+	}
+
+	if err := os.Symlink(config.Latest.Name, latestFolder.Path); err != nil {
+		return fmt.Errorf("failed to create the latest symlink: %+v", err)
+	}
+
+	return nil
 }

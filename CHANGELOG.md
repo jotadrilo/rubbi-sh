@@ -1,3 +1,7 @@
+## Release 0.0.4 (2019-06-14)
+
+- Test release for fixing the version bump automation
+
 ## Release 0.0.3 (2019-06-14)
 
 - Added support for `latest` symlink.

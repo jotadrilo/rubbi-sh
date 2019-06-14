@@ -18,6 +18,10 @@ archives:
       - README.md
       - install.sh
       - dotfiles/*
+    replacements:
+      amd64: x86_64
+    goarch:
+      - amd64
 checksum:
   name_template: 'checksums.txt'
 snapshot:

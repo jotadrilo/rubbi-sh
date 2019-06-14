@@ -31,14 +31,6 @@ curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.5/rubbi-sh
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
-## Getting Started
-
-  * Install rubbi-sh
-    * Download the [latest release](https://github.com/jotadrilo/rubbi-sh/releases)
-    * Uncompress the archive
-    * Run `install.sh` as root user
-  * [Get started with rubbi-sh](#examples)
-
 ## Examples
 
 ### rubcd

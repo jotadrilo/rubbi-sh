@@ -1,3 +1,7 @@
+## Release 0.0.5 (2019-06-14)
+
+- Change `config.go` functions to work with a single `Config` object. This will delegate the `Save` action to the client.
+
 ## Release 0.0.4 (2019-06-14)
 
 - Test release for fixing the version bump automation

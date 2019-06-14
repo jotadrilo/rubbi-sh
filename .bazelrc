@@ -1,0 +1,3 @@
+# move bazelrc here once all clients have upgraded past 0.18.0
+# (since that version changed the paths of the bazel config files)
+import %workspace%/tools/bazel.rc

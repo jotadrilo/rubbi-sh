@@ -1,0 +1,40 @@
+# gazelle:prefix github.com/jotadrilo/rubbi-sh
+# gazelle:proto disable_global
+
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
+
+gazelle(
+    name = "gazelle",
+    external = "vendored",
+)
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "config.go",
+        "main.go",
+    ],
+    importpath = "github.com/jotadrilo/rubbi-sh",
+    visibility = ["//visibility:private"],
+)
+
+go_binary(
+    name = "rubbi-sh-osx",
+    embed = [":go_default_library"],
+    goarch = "amd64",
+    goos = "darwin",
+    pure = "on",
+    visibility = ["//visibility:public"],
+    x_defs = {"main.ver": "{STABLE_VERSION}"},
+)
+
+go_binary(
+    name = "rubbi-sh-linux",
+    embed = [":go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
+    pure = "on",
+    visibility = ["//visibility:public"],
+    x_defs = {"main.ver": "{STABLE_VERSION}"},
+)

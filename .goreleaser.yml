@@ -28,27 +28,7 @@ changelog:
     - '^docs:'
     - '^test:'
 sign:
-  # name of the signature file.
-  # '${artifact}' is the path to the artifact that should be signed.
-  #
   signature: "${artifact}.sig"
-
-  # path to the signature command
-  #
   cmd: gpg
-
-  # command line arguments for the command
-  #
-  # to sign with a specific key use
   args: ["-u", "josriolop@gmail.com", "--output", "${signature}", "--detach-sign", "${artifact}"]
-  #
-  # args: ["--output", "${signature}", "--detach-sign", "${artifact}"]
-
-
-  # which artifacts to sign
-  #
-  #   checksum: only checksum file(s)
-  #   all:      all artifacts
-  #   none:     no signing
-  #
   artifacts: all

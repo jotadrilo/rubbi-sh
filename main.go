@@ -102,6 +102,7 @@ func run() error {
 		if err := RemoveFolder(fn); err != nil {
 			return err
 		}
+		return nil
 	}
 
 	latest, err := GetLatest()

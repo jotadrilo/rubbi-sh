@@ -9,11 +9,13 @@ builds:
 - env:
   - CGO_ENABLED=0
 archives:
-  files:
-    - CHANGELOG.md
-    - LICENSE
-    - README.md
-    - dotfiles/*
+  -
+    id: default
+    files:
+      - CHANGELOG.md
+      - LICENSE
+      - README.md
+      - dotfiles/*
 checksum:
   name_template: 'checksums.txt'
 snapshot:

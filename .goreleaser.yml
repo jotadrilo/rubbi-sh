@@ -2,26 +2,23 @@
 project_name: rubbi-sh
 before:
   hooks:
-    - go mod download
-    # So far, we better do this manually
-    # - ./tools/bump-version.sh
-    # - ./tools/tag-version.sh
+  - go mod download
+  # So far, we better do this manually
+  # - ./tools/bump-version.sh
+  # - ./tools/tag-version.sh
 builds:
-- env:
-  - CGO_ENABLED=0
+- goarch:
+  - amd64
 archives:
-  -
-    id: default
-    files:
-      - CHANGELOG.md
-      - LICENSE
-      - README.md
-      - install.sh
-      - dotfiles/*
-    replacements:
-      amd64: x86_64
-    goarch:
-      - amd64
+- id: default
+  files:
+    - CHANGELOG.md
+    - LICENSE
+    - README.md
+    - install.sh
+    - dotfiles/*
+  replacements:
+    amd64: x86_64
 checksum:
   name_template: 'checksums.txt'
 snapshot:
@@ -37,3 +34,29 @@ sign:
   cmd: gpg
   args: ["-u", "josriolop@gmail.com", "--output", "${signature}", "--detach-sign", "${artifact}"]
   artifacts: all
+
+# Homebrew formula
+brews:
+- name: rubbi-sh
+  homepage: https://github.com/jotadrilo/rubbi-sh
+  description: Go and Shell helpers to provide a sandbox directory for rubbish.
+  url_template: "https://github.com/jotadrilo/rubbi-sh/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+  github:
+    owner: jotadrilo
+    name: homebrew-tap
+  folder: formula
+  commit_author:
+    name: Joseda Rios
+    email: josriolop@gmail.co
+  skip_upload: true
+  ids:
+  - default
+  install: |
+    bin.install "rubbi-sh"
+    (share/"alias").install "dotfiles/.rubbi.sh
+  caveats: |
+    This tool is based on some alias and shell functions
+    Please import the .rubbi.sh file in your profile configuration or add its content directly
+     . \#{(share/"alias")}/.rubbi.s
+  test: |
+    system bin/"rubbi-sh", "-version

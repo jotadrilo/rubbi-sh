@@ -53,10 +53,13 @@ brews:
   - default
   install: |
     bin.install "rubbi-sh"
-    (share/"alias").install "dotfiles/.rubbi.sh
+    (share/"alias").install "dotfiles/.rubbi.sh"
   caveats: |
     This tool is based on some alias and shell functions
+
     Please import the .rubbi.sh file in your profile configuration or add its content directly
-     . \#{(share/"alias")}/.rubbi.s
+
+     . \#{(share/"alias")}/.rubbi.sh
+
   test: |
-    system bin/"rubbi-sh", "-version
+    system bin/"rubbi-sh", "-version"

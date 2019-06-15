@@ -1,3 +1,6 @@
+## Release 0.0.7 (2019-06-15)
+
+- Test release
 
 ## Release 0.0.6 (2019-06-15)
 

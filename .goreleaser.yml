@@ -48,7 +48,7 @@ brews:
   commit_author:
     name: Joseda Rios
     email: josriolop@gmail.co
-  skip_upload: true
+  skip_upload: auto
   ids:
   - default
   install: |

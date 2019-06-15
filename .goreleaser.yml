@@ -57,7 +57,7 @@ brews:
   caveats: |
     Please import the .rubbi.sh file in your profile configuration or add its content directly
 
-     . \#{(share/"alias")}/.rubbi.sh
+     . #{(share/"alias")}/.rubbi.sh
 
     This tool is based on some alias and shell functions and they are core to work.
 

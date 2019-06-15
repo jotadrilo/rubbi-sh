@@ -55,11 +55,11 @@ brews:
     bin.install "rubbi-sh"
     (share/"alias").install "dotfiles/.rubbi.sh"
   caveats: |
-    This tool is based on some alias and shell functions
-
     Please import the .rubbi.sh file in your profile configuration or add its content directly
 
      . \#{(share/"alias")}/.rubbi.sh
+
+    This tool is based on some alias and shell functions and they are core to work.
 
   test: |
     system bin/"rubbi-sh", "-version"

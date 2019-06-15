@@ -10,7 +10,7 @@ If you usually run tons of commands, generating garbage everywhere, you need a p
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.7/rubbi-sh_0.0.7_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.8/rubbi-sh_0.0.8_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
@@ -27,7 +27,7 @@ Alternative:
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.7/rubbi-sh_0.0.7_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.8/rubbi-sh_0.0.8_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 

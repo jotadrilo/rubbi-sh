@@ -46,7 +46,7 @@ brews:
     name: homebrew-tap
   folder: formula
   commit_author:
-    name: Joseda Rios
+    name: jotadrilo
     email: josriolop@gmail.co
   skip_upload: auto
   ids:

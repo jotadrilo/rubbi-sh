@@ -2,7 +2,7 @@
 
 This is a Go and Shell tool that provides a sandbox directory for rubbish.
 
-If you usually run tons of commands, generating garbage everywhere, you need a place to work without generating dirty left overs.
+If you usually run tons of commands that generate garbage, wherever you are, you need an easy way to access a temporary folder where to run these tasks.
 
 ```
 > jotadrilo @ ~ $ rubcd

@@ -35,7 +35,7 @@ sudo bash -c 'cd rubbi-sh; ./install.sh'
 
 ### rubcd
 
-This is the core functinoality. You will get a sandbox for your rubbish and will get `cd`ed to it. This sandbox will be re-created every day and will keep old ones until you reboot your device (they are stored at `/tmp` by default).
+This is the core functionality. You will get a sandbox for your rubbish and will get `cd`ed to it. This sandbox will be re-created every day and will keep old ones until you reboot your device (they are stored at `/tmp` by default).
 
 ```
 > jotadrilo @ ~ $ rubcd
@@ -44,7 +44,7 @@ This is the core functinoality. You will get a sandbox for your rubbish and will
 
 > **NOTE**: During the first run, it will create a new configuration file at `$HOME/.rubbish`. Example:
 > ```
-> $ cat ~/.rubbish/config.json
+> > jotadrilo @ ~ $ cat ~/.rubbish/config.json
 > {
 >   "folders": [
 >     {
@@ -79,7 +79,7 @@ This helper will show the list of rubbish folders.
 This helper will add a new custom rubbish folder. It will not change the working directory.
 
 ```
-$ jotadrilo @ ~ $ rubadd foo
+> jotadrilo @ ~ $ rubadd foo
 /tmp/rubbish/foo
 > jotadrilo @ ~ $ rubshow
 [0] 20190613	/tmp/rubbish/20190613
@@ -96,7 +96,7 @@ This helper will delete an existing rubbish folder by number.
 [0] 20190613	/tmp/rubbish/20190613
 [1] 20190614	/tmp/rubbish/20190614
 [2] foo     	/tmp/rubbish/foo
-$ jotadrilo @ ~ $ rubdel 2
+> jotadrilo @ ~ $ rubdel 2
 > jotadrilo @ ~ $ rubshow
 [0] 20190613	/tmp/rubbish/20190613
 [1] 20190614	/tmp/rubbish/20190614

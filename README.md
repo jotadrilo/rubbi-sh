@@ -4,6 +4,11 @@ This is a Go and Shell tool that provides a sandbox directory for rubbish.
 
 If you usually run tons of commands, generating garbage everywhere, you need a place to work without generating dirty left overs.
 
+```
+> jotadrilo @ ~ $ rubcd
+> jotadrilo @ /tmp/rubbish/20190614 $
+```
+
 ## TL;DR
 
 ### Linux

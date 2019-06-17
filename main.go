@@ -70,7 +70,7 @@ func run() error {
 	if *use != "" {
 		fn, err := strconv.Atoi(*use)
 		if err != nil {
-			return fmt.Errorf("failed to parse folder number to use: %+v", err)
+			return errors.Errorf("failed to parse folder number to use: %+v", err)
 		}
 		if err := config.Use(fn); err != nil {
 			return err
@@ -99,7 +99,7 @@ func run() error {
 	if *del != "" {
 		fn, err := strconv.Atoi(*del)
 		if err != nil {
-			return fmt.Errorf("failed to parse folder number to delete: %+v", err)
+			return errors.Errorf("failed to parse folder number to delete: %+v", err)
 		}
 		if err := config.RemoveFolder(fn); err != nil {
 			return err
@@ -110,14 +110,21 @@ func run() error {
 
 	// Try to change to the target directory
 	if err := os.Chdir(config.Latest.Path); err != nil {
-		return fmt.Errorf("failed to change to directory: %+v", err)
+		// There possibily was a restart that removed the `tmp` folder.
+		if err := config.AddFolder(config.Latest.Name); err != nil {
+			return err
+		}
+		if err := os.Chdir(config.Latest.Path); err != nil {
+			return errors.Errorf("failed to change to directory: %+v", err)
+		}
 	}
-	// Print path as we cannot change the shell working directory
-	// from an external binary
-	fmt.Printf(config.Latest.Path)
 
 	// Dump all the changes in the done configuration
 	config.Save()
+
+	// Print path as we cannot change the shell working directory
+	// from an external binary
+	fmt.Printf(config.Latest.Path)
 
 	return nil
 }

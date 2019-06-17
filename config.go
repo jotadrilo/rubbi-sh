@@ -6,6 +6,9 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/juju/errors"
+	"github.com/mmikulicic/multierror"
 )
 
 var (
@@ -40,7 +43,7 @@ func Initialize(root string) error {
 	} else {
 		configFolder = filepath.Join(home, configFolderName)
 		if err := os.MkdirAll(configFolder, 0755); err != nil {
-			return fmt.Errorf("unable to create directory tree: %+v", err)
+			return errors.Errorf("unable to create directory tree: %+v", err)
 		}
 		configFile = filepath.Join(home, configFolderName, configFileName)
 	}
@@ -79,7 +82,7 @@ func initConifg() error {
 		Root:    rubbishFolder,
 	}
 	if _, err := os.Create(configFile); err != nil {
-		return fmt.Errorf("failed to create configuration file: %+v", err)
+		return errors.Errorf("failed to create configuration file: %+v", err)
 	}
 	if err := config.Save(); err != nil {
 		return err
@@ -90,7 +93,7 @@ func initConifg() error {
 // Clean will remove the root rubbish folder and will recreate the configuration
 func (config *Config) Clean() error {
 	if err := os.RemoveAll(config.Root); err != nil {
-		return fmt.Errorf("failed to remove the folder: %+v", err)
+		return errors.Errorf("failed to remove the folder: %+v", err)
 	}
 	if err := initConifg(); err != nil {
 		return err
@@ -102,12 +105,12 @@ func (config *Config) Clean() error {
 func Load() (*Config, error) {
 	b, err := ioutil.ReadFile(configFile)
 	if err != nil {
-		return nil, fmt.Errorf("failed to read file: %+v", err)
+		return nil, errors.Errorf("failed to read file: %+v", err)
 	}
 
 	config := &Config{}
 	if err := json.Unmarshal([]byte(b), config); err != nil {
-		return nil, fmt.Errorf("failed to decode data: %+v", err)
+		return nil, errors.Errorf("failed to decode data: %+v", err)
 	}
 
 	return config, nil
@@ -117,17 +120,17 @@ func Load() (*Config, error) {
 func (config *Config) Save() error {
 	data, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
-		return fmt.Errorf("failed to encode data: %+v", err)
+		return errors.Errorf("failed to encode data: %+v", err)
 	}
 	if err := ioutil.WriteFile(configFile, data, 0644); err != nil {
-		return fmt.Errorf("failed to write file: %+v", err)
+		return errors.Errorf("failed to write file: %+v", err)
 	}
 	return nil
 }
 
 func createFolder(folder Folder) error {
 	if err := os.MkdirAll(folder.Path, 0755); err != nil {
-		return fmt.Errorf("failed to create directory tree: %+v", err)
+		return errors.Errorf("failed to create directory tree: %+v", err)
 	}
 	return nil
 }
@@ -181,7 +184,7 @@ func (config *Config) Show() error {
 // Use changes the latest folder to the provided folder number
 func (config *Config) Use(fn int) error {
 	if fn > len(config.Folders)-1 {
-		return fmt.Errorf("the provided folder number does not match any existing folder")
+		return errors.Errorf("the provided folder number does not match any existing folder")
 	}
 	config.Latest = config.Folders[fn]
 	return nil
@@ -192,7 +195,7 @@ func (config *Config) Use(fn int) error {
 func (config *Config) RemoveFolder(fn int) error {
 	targetFolder := config.Folders[fn]
 	if err := os.RemoveAll(targetFolder.Path); err != nil {
-		return fmt.Errorf("failed to remove the folder: %+v", err)
+		return errors.Errorf("failed to remove the folder: %+v", err)
 	}
 	config.Folders = remove(config.Folders, fn)
 
@@ -201,6 +204,23 @@ func (config *Config) RemoveFolder(fn int) error {
 		config.updateLatest(config.Folders[len(config.Folders)-1])
 	}
 	return nil
+}
+
+// Iterate over the folder entries and create them again.
+func (config *Config) Recreate() (errs error) {
+	for _, fol := range config.Folders {
+		if _, err := os.Stat(configFile); err != nil {
+			if os.IsNotExist(err) {
+				if err := createFolder(fol); err != nil {
+					errs = multierror.Append(errs, errors.Errorf("failed to create folder %s: %+v", fol.Name, err))
+				}
+			}
+		} else {
+			errs = multierror.Append(errs, errors.Errorf("failed to recreate folder %s: %+v", fol.Name, err))
+		}
+	}
+
+	return errors.Trace(errs)
 }
 
 // https://stackoverflow.com/questions/37334119/how-to-delete-an-element-from-a-slice-in-golang/37335777#37335777
@@ -216,12 +236,12 @@ func (config *Config) updateLatest(folder Folder) error {
 	// Remove existing symlink
 	if _, err := os.Lstat(latestFolder.Path); err == nil {
 		if err := os.Remove(latestFolder.Path); err != nil {
-			return fmt.Errorf("failed to remove the current latest symlink: %+v", err)
+			return errors.Errorf("failed to remove the current latest symlink: %+v", err)
 		}
 	}
 
 	if err := os.Symlink(config.Latest.Name, latestFolder.Path); err != nil {
-		return fmt.Errorf("failed to create the latest symlink: %+v", err)
+		return errors.Errorf("failed to create the latest symlink: %+v", err)
 	}
 
 	return nil

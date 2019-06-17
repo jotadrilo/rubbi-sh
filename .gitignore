@@ -5,3 +5,4 @@ bazel-out
 bazel-testlogs
 .vscode
 dist
+vendor

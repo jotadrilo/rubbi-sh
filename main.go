@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/juju/errors"
 )
 
 var (
@@ -111,7 +113,7 @@ func run() error {
 	// Try to change to the target directory
 	if err := os.Chdir(config.Latest.Path); err != nil {
 		// There possibily was a restart that removed the `tmp` folder.
-		if err := config.AddFolder(config.Latest.Name); err != nil {
+		if err := config.Recreate(); err != nil {
 			return err
 		}
 		if err := os.Chdir(config.Latest.Path); err != nil {

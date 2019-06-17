@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"sort"
 
 	"github.com/juju/errors"
 	"github.com/mmikulicic/multierror"
@@ -163,8 +164,8 @@ func (config *Config) AddFolder(name string) error {
 		return err
 	}
 
-	folders := append(config.Folders, folder)
-	config.Folders = folders
+	config.Folders = append(config.Folders, folder)
+	sortFolders(config.Folders)
 
 	if err := config.updateLatest(folder); err != nil {
 		return err
@@ -198,6 +199,7 @@ func (config *Config) RemoveFolder(fn int) error {
 		return errors.Errorf("failed to remove the folder: %+v", err)
 	}
 	config.Folders = remove(config.Folders, fn)
+	sortFolders(config.Folders)
 
 	// If we are removing the latest folder, point to the last folder in the list
 	if config.Latest.Path == targetFolder.Path {
@@ -209,7 +211,7 @@ func (config *Config) RemoveFolder(fn int) error {
 // Iterate over the folder entries and create them again.
 func (config *Config) Recreate() (errs error) {
 	for _, fol := range config.Folders {
-		if _, err := os.Stat(configFile); err != nil {
+		if _, err := os.Stat(fol.Path); err != nil {
 			if os.IsNotExist(err) {
 				if err := createFolder(fol); err != nil {
 					errs = multierror.Append(errs, errors.Errorf("failed to create folder %s: %+v", fol.Name, err))
@@ -245,4 +247,10 @@ func (config *Config) updateLatest(folder Folder) error {
 	}
 
 	return nil
+}
+
+func sortFolders(folders []Folder) {
+	sort.SliceStable(folders, func(i int, j int) bool {
+		return folders[i].Name < folders[j].Name
+	})
 }

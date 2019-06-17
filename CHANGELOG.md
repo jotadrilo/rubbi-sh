@@ -1,5 +1,6 @@
 ## Release 0.0.9 (2019-06-15)
 
+- Sort folders on addition and deletion
 - Re-create folder structure on restart
 
 ## Release 0.0.9 (2019-06-15)

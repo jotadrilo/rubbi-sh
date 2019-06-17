@@ -119,3 +119,13 @@ This helper will prompt the list of folders and will ask for a folder number to 
 Folder to use: 1
 > jotadrilo @ /tmp/rubbish/20190614 $
 ```
+
+## Development
+
+This projects uses `go mod` and `bazel`.
+
+```
+go mod vendor
+bazel run //:gazelle
+bazel build //:rubbi-sh-osx
+```

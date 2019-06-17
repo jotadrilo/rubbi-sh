@@ -3,10 +3,12 @@
 sudo cp rubbi-sh /usr/local/bin/
 sudo chmod +x /usr/local/bin/rubbi-sh
 
-echo "This tool is based on some alias and shell functions."
+echo "    Please import the .rubbi.sh file in your profile configuration or add its content directly"
 echo ""
-echo "Please import the dotfiles/.rubbi.sh in your shell's configuration file"
-echo "or add its content directly."
+echo "     . $PWD/dotfiles/.rubbi.sh"
 echo ""
-echo " . $PWD/dotfiles/.rubbi.sh"
+echo "    or the .rubbi.minimal.sh for a minimal setup (rbsh shell function only)"
 echo ""
+echo "     . $PWD/dotfiles/.rubbi.minimal.sh"
+echo ""
+echo "    This tool is based on some alias and shell functions that are core to work."

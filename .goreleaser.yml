@@ -59,7 +59,11 @@ brews:
 
      . #{(share/"alias")}/.rubbi.sh
 
-    This tool is based on some alias and shell functions and they are core to work.
+    or the .rubbi.minimal.sh for a minimal setup (rbsh shell function only)
+
+     . #{(share/"alias")}/.rubbi.minimal.sh
+
+    This tool is based on some alias and shell functions that are core to work.
 
   test: |
     system bin/"rubbi-sh", "-version"

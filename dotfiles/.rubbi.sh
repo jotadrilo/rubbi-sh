@@ -1,28 +1,31 @@
-# shellcheck disable=SC2148
+# shellcheck disable=SC2148 disable=SC1090
 
-alias rubsh="rubbi-sh"
-alias rubclean="rubsh -clean"
-alias rubshow="rubsh -show"
-alias rubhelp="rubsh -help"
-alias rubbish="rubcd"
+. "${PWD}/.rubbi.sh"
+
+alias rubsh='rubbi-sh'
+alias rubclean='rubbi-sh -clean'
+alias rubshow='rubbi-sh -show'
+alias rubhelp='rubbi-sh -help'
+
+# Use the handiest alias you prefer
+alias r='rbsh'
+alias rubbish='rbsh'
+alias rubcd='rbsh'
 
 function rubdel {
-    rubsh -del "${1}"
+    rubbi-sh -del "${1}"
 }
 function rubadd {
-    rubsh -add "${1}"
+    rubbi-sh -add "${1}"
 }
 function rubuse {
-    rubsh -use "${1}"
+    rubbi-sh -use "${1}"
 }
 function rubsel {
-    rubsh -show
+    rubbi-sh -show
     echo
     echo -n "Folder to use: "
     read -r fn
-    rubsh -use "$fn"
+    rubbi-sh -use "$fn"
     rubcd
-}
-function rubcd {
-    cd "$(rubsh)" || exit 1
 }

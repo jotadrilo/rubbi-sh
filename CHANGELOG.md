@@ -1,4 +1,9 @@
-## Release 0.0.9 (2019-06-15)
+## Release 0.0.10 (2019-06-15)
+
+- Update latest folder on `Use` command
+- Add different alias
+
+## Release 0.0.10 (2019-06-15)
 
 - Sort folders on addition and deletion
 - Re-create folder structure on restart

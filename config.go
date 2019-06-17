@@ -187,7 +187,9 @@ func (config *Config) Use(fn int) error {
 	if fn > len(config.Folders)-1 {
 		return errors.Errorf("the provided folder number does not match any existing folder")
 	}
-	config.Latest = config.Folders[fn]
+	if err := config.updateLatest(config.Folders[fn]); err != nil {
+		return err
+	}
 	return nil
 }
 

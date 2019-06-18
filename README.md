@@ -5,7 +5,7 @@ This is a Go and Shell tool that provides a sandbox directory for rubbish.
 If you usually run tons of commands that generate garbage, wherever you are, you need an easy way to access a temporary folder where to run these tasks.
 
 ```
-> jotadrilo @ ~ $ rubcd
+> jotadrilo @ ~ $ rubcd # or `r` or `rubbish`
 > jotadrilo @ /tmp/rubbish/20190614 $
 ```
 
@@ -66,6 +66,10 @@ This is the core functionality. You will get a sandbox for your rubbish and will
 > ```
 
 ### rubbish
+
+This is an alias for `rubcd`
+
+### r
 
 This is an alias for `rubcd`
 

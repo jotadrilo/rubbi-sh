@@ -54,6 +54,7 @@ brews:
   install: |
     bin.install "rubbi-sh"
     (share/"alias").install "dotfiles/.rubbi.sh"
+    (share/"alias").install "dotfiles/.rubbi.minimal.sh"
   caveats: |
     Please import the .rubbi.sh file in your profile configuration or add its content directly
 

@@ -1,4 +1,9 @@
-## Release 0.0.10 (2019-06-15)
+## Release 0.0.12 (2019-06-15)
+
+- Fix Hombrew formula
+- Fix alias files
+
+## Release 0.0.11 (2019-06-15)
 
 - Update latest folder on `Use` command
 - Add different alias

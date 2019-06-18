@@ -1,6 +1,6 @@
 # shellcheck disable=SC2148 disable=SC1090
 
-. "${PWD}/.rubbi.sh"
+. "$(dirname "$0")/.rubbi.minimal.sh"
 
 alias rubsh='rubbi-sh'
 alias rubclean='rubbi-sh -clean'

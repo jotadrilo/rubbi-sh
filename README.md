@@ -5,7 +5,7 @@ This is a Go and Shell tool that provides a sandbox directory for rubbish.
 If you usually run tons of commands that generate garbage, wherever you are, you need an easy way to access a temporary folder where to run these tasks.
 
 ```
-> jotadrilo @ ~ $ rubcd # or `r` or `rubbish`
+> jotadrilo @ ~ $ rbsh # or `rubcd` or `r` or `rubbish`
 > jotadrilo @ /tmp/rubbish/20190614 $
 ```
 
@@ -38,15 +38,16 @@ sudo bash -c 'cd rubbi-sh; ./install.sh'
 
 ## Examples
 
-### rubcd
+### rbsh
 
 This is the core functionality. You will get a sandbox for your rubbish and will get `cd`ed to it. This sandbox will be re-created every day and will keep old ones until you reboot your device (they are stored at `/tmp` by default).
 
 ```
-> jotadrilo @ ~ $ rubcd
+> jotadrilo @ ~ $ rbsh
 > jotadrilo @ /tmp/rubbish/20190614 $
 ```
 
+> **NOTE**: Alias: `rubcd`, `rubbish`, `r`
 > **NOTE**: During the first run, it will create a new configuration file at `$HOME/.rubbish`. Example:
 > ```
 > > jotadrilo @ ~ $ cat ~/.rubbish/config.json
@@ -64,14 +65,6 @@ This is the core functionality. You will get a sandbox for your rubbish and will
 >   "root": "/tmp/rubbish"
 > }
 > ```
-
-### rubbish
-
-This is an alias for `rubcd`
-
-### r
-
-This is an alias for `rubcd`
 
 ### rubshow
 

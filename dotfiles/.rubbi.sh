@@ -1,7 +1,5 @@
 # shellcheck disable=SC2148 disable=SC1090
 
-. "$(dirname "$0")/.rubbi.minimal.sh"
-
 alias rubsh='rubbi-sh'
 alias rubclean='rubbi-sh -clean'
 alias rubshow='rubbi-sh -show'
@@ -28,4 +26,7 @@ function rubsel {
     read -r fn
     rubbi-sh -use "$fn"
     rubcd
+}
+function rbsh {
+    cd "$(rubbi-sh)" || exit 1
 }

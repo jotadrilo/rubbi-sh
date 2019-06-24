@@ -1,3 +1,7 @@
+## Release 0.0.13 (2019-06-24)
+
+- Fix alias not to depend on others
+
 ## Release 0.0.12 (2019-06-15)
 
 - Fix Hombrew formula

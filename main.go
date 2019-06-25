@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/juju/errors"
@@ -17,10 +16,10 @@ var (
 
 	clean = flag.Bool("clean", false, "if true, the rubbish folder is removed")
 	sel   = flag.Bool("sel", false, "if true, prompts the folders list and outputs the choosen one")
+	del   = flag.Bool("del", false, "if true, prompts the folders list and removes the choosen one")
 	show  = flag.Bool("show", false, "if true, outputs the current rubbish folders")
 	ver   = flag.Bool("ver", false, "if true, the rubbish version will be shown")
 	add   = flag.String("add", "", "folder name to add")
-	del   = flag.String("del", "", "folder number to delete")
 	root  = flag.String("root", "/tmp", "temporary location for the rubbish folder")
 )
 
@@ -98,10 +97,13 @@ func run() error {
 		}
 	}
 
-	if *del != "" {
-		fn, err := strconv.Atoi(*del)
+	if *del {
+		if len(config.Folders) <= 1 {
+			return errors.Errorf("unable to remove folders when there is only one folder or none.")
+		}
+		fn, err := SelectFolder(config)
 		if err != nil {
-			return errors.Errorf("failed to parse folder number to delete: %+v", err)
+			return err
 		}
 		if err := config.RemoveFolder(fn); err != nil {
 			return err

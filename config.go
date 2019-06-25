@@ -195,17 +195,10 @@ func (config *Config) Use(fn int) error {
 // RemoveFolder removes a folder from the configuration and the filesystem
 // If the folder is marked as latest, the last folder entry becomes latest.
 func (config *Config) RemoveFolder(fn int) error {
-	targetFolder := config.Folders[fn]
-	if err := os.RemoveAll(targetFolder.Path); err != nil {
+	if err := os.RemoveAll(config.Folders[fn].Path); err != nil {
 		return errors.Errorf("failed to remove the folder: %+v", err)
 	}
-	config.Folders = remove(config.Folders, fn)
-	sortFolders(config.Folders)
-
-	// If we are removing the latest folder, point to the last folder in the list
-	if config.Latest.Path == targetFolder.Path {
-		config.updateLatest(config.Folders[len(config.Folders)-1])
-	}
+	config.Flush()
 	return nil
 }
 
@@ -216,6 +209,19 @@ func (config *Config) Flush() (errs error) {
 		if _, err := os.Stat(fol.Path); err == nil {
 			folders = append(folders, fol)
 		}
+	}
+	sortFolders(folders)
+
+	// If the latest folder was removed, point to the last folder in the list
+	var shouldUpdateLatest = true
+	for _, fol := range folders {
+		if fol.Path == config.Latest.Path {
+			shouldUpdateLatest = false
+			break
+		}
+	}
+	if shouldUpdateLatest {
+		config.updateLatest(folders[len(folders)-1])
 	}
 
 	config.Folders = folders

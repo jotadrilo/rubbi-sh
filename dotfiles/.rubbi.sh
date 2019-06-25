@@ -11,13 +11,10 @@ alias rubbish='rbsh'
 alias rubcd='rbsh'
 
 function rubdel {
-    rubbi-sh -del "${1}"
+    rubbi-sh -del
 }
 function rubadd {
     rubbi-sh -add "${1}"
-}
-function rubuse {
-    rubbi-sh -use "${1}"
 }
 function rubsel {
     rubbi-sh -sel

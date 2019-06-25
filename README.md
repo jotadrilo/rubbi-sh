@@ -15,7 +15,7 @@ If you usually run tons of commands that generate garbage, wherever you are, you
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.14/rubbi-sh_0.0.14_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.1.0/rubbi-sh_0.1.0_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
@@ -32,7 +32,7 @@ Alternative:
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.0.14/rubbi-sh_0.0.14_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.1.0/rubbi-sh_0.1.0_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
@@ -92,30 +92,32 @@ This helper will add a new custom rubbish folder. It will not change the working
 
 ### rubdel
 
-This helper will delete an existing rubbish folder by number.
+This helper will prompt the list of folders and will delete to the choosen one.
 
 ```
-> jotadrilo @ ~ $ rubshow
-[0] 20190613	/tmp/rubbish/20190613
-[1] 20190614	/tmp/rubbish/20190614
-[2] foo     	/tmp/rubbish/foo
-> jotadrilo @ ~ $ rubdel 2
-> jotadrilo @ ~ $ rubshow
-[0] 20190613	/tmp/rubbish/20190613
-[1] 20190614	/tmp/rubbish/20190614
+> jotadrilo @ ~ $ rubdel
+Use the arrow keys to navigate: ↓ ↑ → ←
+? Select Folder:
+    /tmp/rubbish/20190625
+  ▸ /tmp/rubbish/20190626
+✔ /tmp/rubbish/20190626
+> jotadrilo @ ~ $
 ```
+
+> **NOTE:** If the choosen folder was the latest one, the last folder in the list will become the new latest folder.
 
 ### rubsel
 
-This helper will prompt the list of folders and will ask for a folder number to `cd`.
+This helper will prompt the list of folders and will `cd` to the choosen one.
 
 ```
 > jotadrilo @ ~ $ rubsel
-[0] 20190613	/tmp/rubbish/20190613
-[1] 20190614	/tmp/rubbish/20190614
-
-Folder to use: 1
-> jotadrilo @ /tmp/rubbish/20190614 $
+Use the arrow keys to navigate: ↓ ↑ → ←
+? Select Folder:
+  ▸ /tmp/rubbish/20190625
+    /tmp/rubbish/20190626
+✔ /tmp/rubbish/20190625
+> jotadrilo @ /tmp/rubbish/20190625 $
 ```
 
 ## Development

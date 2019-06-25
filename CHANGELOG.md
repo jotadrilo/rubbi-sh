@@ -2,6 +2,7 @@
 
 - **Remove** `use` option
 - Add **terminal interface** to the new `sel` option to prompt the list of folders and use the selected one
+- Add **terminal interface** to the `del` option to prompt the list of folders and delete the selected one
 - **Adjust shell helpers** to work with this new feature
 
 ## Release 0.0.14 (2019-06-25)

@@ -20,11 +20,7 @@ function rubuse {
     rubbi-sh -use "${1}"
 }
 function rubsel {
-    rubbi-sh -show
-    echo
-    echo -n "Folder to use: "
-    read -r fn
-    rubbi-sh -use "$fn"
+    rubbi-sh -sel
     rubcd
 }
 function rbsh {

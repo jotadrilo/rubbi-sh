@@ -16,12 +16,12 @@ var (
 	date    = "unknown"
 
 	clean = flag.Bool("clean", false, "if true, the rubbish folder is removed")
+	sel   = flag.Bool("sel", false, "if true, prompts the folders list and outputs the choosen one")
 	show  = flag.Bool("show", false, "if true, outputs the current rubbish folders")
 	ver   = flag.Bool("ver", false, "if true, the rubbish version will be shown")
 	add   = flag.String("add", "", "folder name to add")
 	del   = flag.String("del", "", "folder number to delete")
 	root  = flag.String("root", "/tmp", "temporary location for the rubbish folder")
-	use   = flag.String("use", "", "folder number to use")
 )
 
 func init() {
@@ -69,10 +69,10 @@ func run() error {
 		return nil
 	}
 
-	if *use != "" {
-		fn, err := strconv.Atoi(*use)
+	if *sel {
+		fn, err := SelectFolder(config)
 		if err != nil {
-			return errors.Errorf("failed to parse folder number to use: %+v", err)
+			return err
 		}
 		if err := config.Use(fn); err != nil {
 			return err

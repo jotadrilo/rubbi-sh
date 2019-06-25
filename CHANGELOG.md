@@ -1,6 +1,12 @@
+## Release 0.1.0 (2019-06-26)
+
+- **Remove** `use` option
+- Add **terminal interface** to the new `sel` option to prompt the list of folders and use the selected one
+- **Adjust shell helpers** to work with this new feature
+
 ## Release 0.0.14 (2019-06-25)
 
-- Add Flush feature to remove entries in the configuration for absent folders
+- **Add `Flush` feature** to remove entries in the configuration for absent folders
 
 ## Release 0.0.13 (2019-06-24)
 
@@ -8,7 +14,7 @@
 
 ## Release 0.0.12 (2019-06-15)
 
-- Fix Hombrew formula
+- Fix **Hombrew** formula
 - Fix alias files
 
 ## Release 0.0.11 (2019-06-15)

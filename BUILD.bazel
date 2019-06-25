@@ -14,12 +14,13 @@ go_library(
     srcs = [
         "config.go",
         "main.go",
+        "tui.go",
     ],
     importpath = "github.com/jotadrilo/rubbi-sh",
     visibility = ["//visibility:private"],
     deps = [
         "//vendor/github.com/juju/errors:go_default_library",
-        "//vendor/github.com/mmikulicic/multierror:go_default_library",
+        "//vendor/github.com/manifoldco/promptui:go_default_library",
     ],
 )
 

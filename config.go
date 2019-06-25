@@ -9,7 +9,6 @@ import (
 	"sort"
 
 	"github.com/juju/errors"
-	"github.com/mmikulicic/multierror"
 )
 
 var (
@@ -210,20 +209,16 @@ func (config *Config) RemoveFolder(fn int) error {
 	return nil
 }
 
-// Iterate over the folder entries and create them again.
-func (config *Config) Recreate() (errs error) {
+// Flush iterates over the folder entries and remove them from the configuration if they are not present anymore.
+func (config *Config) Flush() (errs error) {
+	var folders = []Folder{}
 	for _, fol := range config.Folders {
-		if _, err := os.Stat(fol.Path); err != nil {
-			if os.IsNotExist(err) {
-				if err := createFolder(fol); err != nil {
-					errs = multierror.Append(errs, errors.Errorf("failed to create folder %s: %+v", fol.Name, err))
-				}
-			}
-		} else {
-			errs = multierror.Append(errs, errors.Errorf("failed to recreate folder %s: %+v", fol.Name, err))
+		if _, err := os.Stat(fol.Path); err == nil {
+			folders = append(folders, fol)
 		}
 	}
 
+	config.Folders = folders
 	return errors.Trace(errs)
 }
 

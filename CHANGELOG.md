@@ -1,3 +1,7 @@
+## Release 0.0.14 (2019-06-25)
+
+- Add Flush feature to remove entries in the configuration for absent folders
+
 ## Release 0.0.13 (2019-06-24)
 
 - Fix alias not to depend on others

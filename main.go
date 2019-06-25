@@ -110,15 +110,14 @@ func run() error {
 		return nil
 	}
 
+	// There possibily was a restart and the `tmp` folder was removed.
+	if err := config.Flush(); err != nil {
+		return err
+	}
+
 	// Try to change to the target directory
 	if err := os.Chdir(config.Latest.Path); err != nil {
-		// There possibily was a restart that removed the `tmp` folder.
-		if err := config.Recreate(); err != nil {
-			return err
-		}
-		if err := os.Chdir(config.Latest.Path); err != nil {
-			return errors.Errorf("failed to change to directory: %+v", err)
-		}
+		return errors.Errorf("failed to change to directory: %+v", err)
 	}
 
 	// Dump all the changes in the done configuration

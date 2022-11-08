@@ -1,6 +1,6 @@
 module github.com/jotadrilo/rubbi-sh
 
-go 1.12
+go 1.19
 
 require (
 	github.com/alecthomas/units v0.0.0-20151022065526-2efee857e7cf // indirect

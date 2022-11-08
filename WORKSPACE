@@ -9,7 +9,7 @@ http_archive(
 http_archive(
     name = "bazel_gazelle",
     sha256 = "448e37e0dbf61d6fa8f00aaa12d191745e14f07c31cabfa731f0c8e8a4f41b97",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.28.0/bazel-gazelle-0.28.0.tar.gz"],
+    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.28.0/bazel-gazelle-v0.28.0.tar.gz"],
 )
 
 http_archive(

@@ -15,7 +15,7 @@ If you usually run tons of commands that generate garbage, wherever you are, you
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.1.0/rubbi-sh_0.1.0_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/v1.0.0/rubbi-sh_v1.0.0_linux_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
@@ -32,7 +32,7 @@ Alternative:
 
 ```
 mkdir -p rubbi-sh && \
-curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/0.1.0/rubbi-sh_0.1.0_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
+curl -sSL https://github.com/jotadrilo/rubbi-sh/releases/download/v1.0.0/rubbi-sh_v1.0.0_darwin_x86_64.tar.gz | tar xzf - -C rubbi-sh && \
 sudo bash -c 'cd rubbi-sh; ./install.sh'
 ```
 
@@ -125,7 +125,7 @@ Use the arrow keys to navigate: ↓ ↑ → ←
 This projects uses `go mod` and `bazel`.
 
 ```
-go mod vendor
+bazel run //:gazelle-update-repos
 bazel run //:gazelle
 bazel build //:rubbi-sh-osx
 ```

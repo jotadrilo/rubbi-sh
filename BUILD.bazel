@@ -4,9 +4,17 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
+gazelle(name = "gazelle")
+
 gazelle(
-    name = "gazelle",
-    external = "vendored",
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-to_macro=deps.bzl%go_dependencies",
+        "-prune",
+        "-build_file_proto_mode=disable_global",
+    ],
+    command = "update-repos",
 )
 
 go_library(
@@ -19,8 +27,8 @@ go_library(
     importpath = "github.com/jotadrilo/rubbi-sh",
     visibility = ["//visibility:private"],
     deps = [
-        "//vendor/github.com/juju/errors:go_default_library",
-        "//vendor/github.com/manifoldco/promptui:go_default_library",
+        "@com_github_juju_errors//:go_default_library",
+        "@com_github_manifoldco_promptui//:go_default_library",
     ],
 )
 

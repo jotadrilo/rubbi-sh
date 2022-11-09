@@ -1,4 +1,0 @@
-build --javabase=@bazel_tools//tools/jdk:host_jdk
-build --action_env=PATH=/bin:/usr/bin:/usr/local/bin
-build --action_env=HOME
-build --workspace_status_command=./tools/status.sh

@@ -29,11 +29,19 @@ changelog:
     exclude:
     - '^docs:'
     - '^test:'
-sign:
+signs:
+- id: deafult
+  artifacts: all
   signature: "${artifact}.sig"
   cmd: gpg
-  args: ["-u", "josriolop@gmail.com", "--output", "${signature}", "--detach-sign", "${artifact}"]
-  artifacts: all
+  args:
+    - "--batch"
+    - "--local-user"
+    - "{{ .Env.GPG_FINGERPRINT }}"
+    - "--output"
+    - "${signature}"
+    - "--detach-sign"
+    - "${artifact}"
 
 # Homebrew formula
 brews:
@@ -41,13 +49,13 @@ brews:
   homepage: https://github.com/jotadrilo/rubbi-sh
   description: Go and Shell helpers to provide a sandbox directory for rubbish.
   url_template: "https://github.com/jotadrilo/rubbi-sh/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
-  github:
+  tap:
     owner: jotadrilo
     name: homebrew-tap
   folder: formula
   commit_author:
     name: jotadrilo
-    email: josriolop@gmail.co
+    email: josriolop@gmail.com
   skip_upload: auto
   ids:
   - default

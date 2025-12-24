@@ -20,9 +20,9 @@ http_archive(
 
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "07ee8ca536080f5ebab6377fc6e8920e9a761d2ee4e64f0f6d919612f6ab56aa",
-    strip_prefix = "rules_docker-0.25.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.25.0.tar.gz"],
+    sha256 = "febf632b4c2dc44c7fe577df87937ae3403c77182f4f850a3368a069a0986a52",
+    strip_prefix = "rules_docker-0.26.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/archive/v0.26.0.tar.gz"],
 )
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
